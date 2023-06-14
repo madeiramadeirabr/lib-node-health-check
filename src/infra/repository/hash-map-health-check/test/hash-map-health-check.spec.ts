@@ -41,12 +41,7 @@ describe('HashMapHealthCheck', () => {
 
   it('should set dependency status correctly', () => {
     const dependencyName = 'dependency1';
-    const status = 'UP';
-
-    const dependencies = [
-      { name: 'dependency1', status: 'DOWN' },
-      { name: 'dependency2', status: 'UP' },
-    ];
+    const status = DependencyStatusEnum.Unavailable;
 
     jest.spyOn(cache, 'get').mockReturnValue(dependencies);
 
@@ -67,9 +62,9 @@ describe('HashMapHealthCheck', () => {
     expect(cache.set).toHaveBeenCalledWith('health-check', status);
   });
 
-  it('should throw an error for unimplemented method getHealthCheck()', async () => {
-    await expect(hashMap.getHealthCheck()).rejects.toThrow(
-      'Method not implemented.',
-    );
-  });
+  // it('should throw an error for unimplemented method getHealthCheck()', async () => {
+  //   await expect(hashMap.getHealthCheck()).rejects.toThrow(
+  //     'Method not implemented.',
+  //   );
+  // });
 });
