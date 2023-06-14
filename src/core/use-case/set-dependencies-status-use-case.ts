@@ -1,6 +1,6 @@
-import { HealthCheckRepository } from 'core/repository/health-check-repository';
+import { HealthCheckRepository } from '../repository/health-check-repository';
 import { UseCaseBase } from './use-case';
-import { DependencyType } from 'core/entities/dependency-type';
+import { DependencyType } from '../entities/dependency-type';
 
 export class SetDependenciesStatusUseCase extends UseCaseBase<
   Pick<DependencyType, 'name' | 'status'>,

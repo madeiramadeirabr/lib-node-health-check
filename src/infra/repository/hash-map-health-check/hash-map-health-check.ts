@@ -1,9 +1,9 @@
-import { DependencyStatusEnum } from 'core/entities/dependency-status-enum';
-import { DependencyType } from 'core/entities/dependency-type';
-import { HealthCheckType } from 'core/entities/health-check-type';
-import { HealthCheckStatusEnum } from 'core/entities/health-status-enum';
-import { HealthCheckRepository } from 'core/repository/health-check-repository';
-import { Memory } from 'infra/datasource/memory/interface/memory-interface';
+import { DependencyStatusEnum } from '../../../core/entities/dependency-status-enum';
+import { DependencyType } from '../../../core/entities/dependency-type';
+import { HealthCheckType } from '../../../core/entities/health-check-type';
+import { HealthCheckStatusEnum } from '../../../core/entities/health-status-enum';
+import { HealthCheckRepository } from '../../../core/repository/health-check-repository';
+import { Memory } from '../../datasource/memory/interface/memory-interface';
 
 export class HashMapHealthCheck implements HealthCheckRepository {
   private readonly DependenciesKey = 'dependencies';

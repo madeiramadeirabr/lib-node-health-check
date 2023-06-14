@@ -1,10 +1,10 @@
 import { createMock } from 'ts-auto-mock';
-import { Memory } from 'infra/datasource/memory/interface/memory-interface';
+import { Memory } from '../../../../infra/datasource/memory/interface/memory-interface';
 import { HashMapHealthCheck } from '../hash-map-health-check';
-import { DependencyType } from 'core/entities/dependency-type';
-import { DependencyKindEnum } from 'core/entities/dependency-kind-enum';
-import { DependencyStatusEnum } from 'core/entities/dependency-status-enum';
-import { HealthCheckStatusEnum } from 'core/entities/health-status-enum';
+import { DependencyType } from '../../../../core/entities/dependency-type';
+import { DependencyKindEnum } from '../../../../core/entities/dependency-kind-enum';
+import { DependencyStatusEnum } from '../../../../core/entities/dependency-status-enum';
+import { HealthCheckStatusEnum } from '../../../../core/entities/health-status-enum';
 
 describe('HashMapHealthCheck', () => {
   let hashMap: HashMapHealthCheck;
