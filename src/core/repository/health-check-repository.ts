@@ -10,6 +10,6 @@ export interface HealthCheckRepository {
     dependencyName: string,
     status: DependencyStatusEnum,
   ): void;
-  //TODO I don't think this is a good idea
-  setHealthCheckStatus(status: HealthCheckStatusEnum): void;
+  //TODO name, version
+  setHealthCheckBasicInfo(status: HealthCheckStatusEnum): void;
 }

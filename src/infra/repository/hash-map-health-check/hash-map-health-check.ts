@@ -11,6 +11,10 @@ export class HashMapHealthCheck implements HealthCheckRepository {
 
   constructor(private cache: Memory) {}
 
+  setHealthCheckBasicInfo(status: HealthCheckStatusEnum): void {
+    throw new Error('Method not implemented.');
+  }
+
   getHealthCheck(): Promise<HealthCheckType> {
     throw new Error('Method not implemented.');
   }
@@ -30,9 +34,5 @@ export class HashMapHealthCheck implements HealthCheckRepository {
           dependency.status = status;
         }
       });
-  }
-
-  setHealthCheckStatus(status: HealthCheckStatusEnum): void {
-    this.cache.set(this.HealthCheckKey, status);
   }
 }
