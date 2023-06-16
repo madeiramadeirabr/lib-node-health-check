@@ -1,16 +1,32 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "lib": [
+      "ESNext"
+    ],
+    "esModuleInterop": true,
     "moduleResolution": "node",
-    "pretty": true,
-    "resolveJsonModule": true,
+    "removeComments": true,
     "sourceMap": true,
-    "target": "es2021",
-    "outDir": "./dist",
-    "baseUrl": "./src",
-    "experimentalDecorators": true,
-    "strict": true
+    "target": "ES2020",
+    "outDir": "dist",
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
   },
-  "include": ["src/**/*.ts", "test/**/*.spec.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*",
+    ".idea/**/*",
+    ".husky/**/*",
+    ".github/**/*"
+  ]
 }
