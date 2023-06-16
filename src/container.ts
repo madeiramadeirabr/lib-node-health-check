@@ -1,6 +1,7 @@
 import { HealthCheckRepository } from './core/repository/health-check-repository';
 import { GetDependenciesUseCase } from './core/use-case/get-health-check-use-case';
 import { SetDependenciesStatusUseCase } from './core/use-case/set-dependencies-status-use-case';
+import { SetDependenciesUseCase } from './core/use-case/set-dependencies-use-case';
 import { HashMapMemory } from './infra/datasource/memory/hash-map-memory';
 import { Memory } from './infra/datasource/memory/interface/memory-interface';
 import { HashMapHealthCheck } from './infra/repository/hash-map-health-check/hash-map-health-check';
@@ -43,12 +44,10 @@ export class Container {
   }
 
   public static getSetDependenciesUseCase() {
-    return Container.make<SetDependenciesStatusUseCase>(
+    return Container.make<SetDependenciesUseCase>(
       'SetDependenciesUseCase',
       () => {
-        return new SetDependenciesStatusUseCase(
-          Container.getHealthCheckRepository(),
-        );
+        return new SetDependenciesUseCase(Container.getHealthCheckRepository());
       },
     );
   }
