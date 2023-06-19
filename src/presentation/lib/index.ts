@@ -1,3 +1,4 @@
+export { HealthCheckBasicInfo } from '../../core/entities/health-check-basic-info-type';
 export { DependencyKindEnum } from '../../core/entities/dependency-kind-enum';
 export { DependencyStatusEnum } from '../../core/entities/dependency-status-enum';
 export { DependencyType } from '../../core/entities/dependency-type';

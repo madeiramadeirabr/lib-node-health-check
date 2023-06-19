@@ -32,7 +32,10 @@ import { AppService } from './app.service';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
-    HealthCheckModule.register(),
+    HealthCheckModule.register({
+      name : 'my-app',
+      version : '1.0.1',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

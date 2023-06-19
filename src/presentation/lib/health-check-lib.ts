@@ -1,6 +1,7 @@
 import { Container } from '../../container';
 import { DependencyStatusEnum } from '../../core/entities/dependency-status-enum';
 import { DependencyType } from '../../core/entities/dependency-type';
+import { HealthCheckBasicInfo } from '../../core/entities/health-check-basic-info-type';
 import { HealthCheckType } from '../../core/entities/health-check-type';
 
 export class HealthCheckLib {
@@ -36,5 +37,12 @@ export class HealthCheckLib {
   public async getHealthCheck(): Promise<HealthCheckType> {
     const getDependenciesUseCase = Container.getGetDependenciesUseCase();
     return await getDependenciesUseCase.execute();
+  }
+
+  public async setHealthCheckBasicInfo(
+    basicInfo: HealthCheckBasicInfo,
+  ): Promise<void> {
+    const setHealthCheckBasicInfoUseCase = Container.getSetBasicInfoUseCase();
+    await setHealthCheckBasicInfoUseCase.execute(basicInfo);
   }
 }

@@ -14,6 +14,9 @@ Métodos
 - `setDependencyStatus(dependencyName: string, status: DependencyStatusEnum): void`
   Este método atualiza o status de uma dependência individual. Ele recebe dois parâmetros: dependencyName, que é uma string representando o nome ou identificador da dependência, e status, que é um valor de enumeração do tipo DependencyStatusEnum. O DependencyStatusEnum é um tipo de enumeração personalizado que define diferentes valores de status para uma dependência.
 
+- `setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfoType): void`
+  Este método define as informações básicas da verificação de saúde. Ele recebe como parâmetro um objeto HealthCheckBasicInfoType. O HealthCheckBasicInfoType é um tipo personalizado que representa as informações básicas da verificação de saúde. Ele inclui o nome e a versão da aplicação ou sistema.
+
 ### Exemplo de uso
 
 
@@ -60,6 +63,10 @@ db.once('open', () => {
   ];
   //set the dependencies
   healthCheck.setDependencies(dependencies);
+  healthCheck.setHealthCheckBasicInfo({
+    name : 'my-app',
+    version : '1.0.1',
+  })
 
   db.on('disconnected', () => {
     // Set the dependency status to unavailable
