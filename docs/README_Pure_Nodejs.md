@@ -1,7 +1,6 @@
 # Documentação Técnica
 
-Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o Express e o MongoDB com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde. Sinta-se à vontade para personalizar e estender a aplicação com base nos requisitos específicos do seu projeto.
-
+Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o Express e o MongoDB com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde.
 ## HealthCheckLib
 
 Métodos

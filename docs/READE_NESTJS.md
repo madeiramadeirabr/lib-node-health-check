@@ -1,6 +1,6 @@
 # Documentação Técnica
 
-Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o NestJs com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde. Sinta-se à vontade para personalizar e estender a aplicação com base nos requisitos específicos do seu projeto.
+Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o NestJs com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde.
 
 ## HealthCheckLib
 
@@ -39,10 +39,11 @@ import { AppService } from './app.service';
 })
 
 export class AppModule {
+  static public DB_NAME = 'MongoDB';
   constructor(private readonly healthCheckLib: HealthCheckService) {
     const dependencies: DependencyType[] = [
       {
-        name: 'MongoDB',
+        name: AppModule.DB_NAME,
         kind: DependencyKindEnum.DATABASE,
         status: DependencyStatusEnum.UP,
       },
@@ -73,13 +74,13 @@ export class AppController {
   async createBook(): Promise<any> {
     try {
       const book = await this.appService.createBook();
-      this.healthCheckLib.setDependencyStatus('MongoDB', DependencyStatusEnum.Healthy);
+      this.healthCheckLib.setDependencyStatus(AppModule.DB_NAME, DependencyStatusEnum.Healthy);
       return {
         message: 'Book created successfully',
         book,
       };
     } catch (error) {
-        this.healthCheckLib.setDependencyStatus('MongoDB', DependencyStatusEnum.Unhealthy);
+        this.healthCheckLib.setDependencyStatus(AppModule.DB_NAME, DependencyStatusEnum.Unhealthy);
         throw error;
     }
   }
