@@ -1,13 +1,22 @@
 {
   "compilerOptions": {
     "lib": [
-      "ESNext"
+      "es2017",
+      "es7",
+      "es6"
     ],
     "esModuleInterop": true,
     "moduleResolution": "node",
     "removeComments": true,
     "sourceMap": true,
-    "target": "ES2020",
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "target": "es2017",
     "outDir": "dist",
     "plugins": [
       {
@@ -27,6 +36,9 @@
     ".vscode/**/*",
     ".idea/**/*",
     ".husky/**/*",
-    ".github/**/*"
+    ".github/**/*",
+    "dist",
+    "test",
+    "**/*spec.ts"
   ]
 }

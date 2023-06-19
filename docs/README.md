@@ -1,4 +1,12 @@
 ## Documentação Técnica
 
-<!--- Acesse o link no confluence para ver mais sobre o plugin techdocs 
-https://madeiramadeira.atlassian.net/wiki/spaces/DX/pages/2792980526/TechDocs> 
+Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o NestJs com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Sinta-se à vontade para personalizar e estender a aplicação com base nos requisitos específicos do seu projeto.
+
+
+## Nodejs
+
+Checar o arquivo [README_Pure_Nodejs](README_Pure_Nodejs.md)
+
+## NestJs
+
+Checar o arquivo [README_NEST_JS](READE_NESTJS.md)

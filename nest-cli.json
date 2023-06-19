@@ -1,0 +1,9 @@
+{
+    "health-check": {
+        "type": "health-check",
+        "root": "src",
+        "entryFile": "index",
+        "sourceRoot": "src/presentation/nestjs",
+        "language": "ts"
+    }
+}
