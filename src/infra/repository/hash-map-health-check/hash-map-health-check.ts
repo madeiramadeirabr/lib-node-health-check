@@ -3,7 +3,8 @@ import { DependencyType } from '../../../core/entities/dependency-type';
 import { HealthCheckBasicInfo } from '../../../core/entities/health-check-basic-info-type';
 import { HealthCheckType } from '../../../core/entities/health-check-type';
 import { HealthCheckRepository } from '../../../core/repository/health-check-repository';
-import { HealthCheckStatusEnum, SystemType } from '../../../presentation';
+import { HealthCheckStatusEnum } from '../../../core/entities/health-status-enum';
+import { SystemType } from '../../../core/entities/system-type';
 import { Memory } from '../../datasource/memory/interface/memory-interface';
 import os from 'os';
 
