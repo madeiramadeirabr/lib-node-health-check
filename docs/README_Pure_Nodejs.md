@@ -28,7 +28,7 @@ const {
   DependencyType,
   DependencyKindEnum,
   DependencyStatusEnum,
-} = require('lib-node-health-check/presentation/lib');
+} = require('lib-node-health-check');
 
 // Create an Express application
 const app = express();
