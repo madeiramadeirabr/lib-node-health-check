@@ -99,7 +99,6 @@ export class HashMapHealthCheck implements HealthCheckRepository {
       0,
     );
 
-    // return Number(((1 - totalIdle / totalTick) * 100).toFixed(2));
     return (1 - totalIdle / totalTick) * 100;
   }
 
