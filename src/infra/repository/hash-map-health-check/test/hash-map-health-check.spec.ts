@@ -77,4 +77,34 @@ describe('HashMapHealthCheck', () => {
     expect(cache.get).toHaveBeenCalledWith('basic-info');
     expect(result).toEqual(basicInfo);
   });
+
+  it('should get health check correctly', async () => {
+    const basicInfo = {
+      name: 'name',
+      version: 'version',
+    };
+
+    jest.spyOn(cache, 'get').mockReturnValue(dependencies);
+    jest.spyOn(hashMap, 'getBasicInfo').mockReturnValue(basicInfo);
+
+    const result = await hashMap.getHealthCheck();
+
+    expect(cache.get).toHaveBeenCalledWith('dependencies');
+    expect(hashMap.getBasicInfo).toHaveBeenCalled();
+    expect(result).toEqual({
+      status: DependencyStatusEnum.Healthy,
+      dependencies,
+      ...basicInfo,
+      timestamp: expect.any(Number),
+      system: {
+        cpu: {
+          utilization: expect.any(Number),
+        },
+        memory: {
+          total: expect.any(Number),
+          used: expect.any(Number),
+        },
+      },
+    });
+  });
 });
