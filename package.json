@@ -2,7 +2,7 @@
   "name": "lib-node-health-check",
   "version": "1.0.0",
   "description": "No description available",
-  "main": "app.ts",
+  "main": "dist/presentation/lib/index.js",
   "scripts": {
     "test": "set ENVIRONMENT_NAME=test && jest",
     "coverage": "set ENVIRONMENT_NAME=test && jest --coverage",
