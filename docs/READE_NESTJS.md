@@ -20,7 +20,7 @@ Métodos
 No seu módulo principal, importe o módulo HealthCheckModule e injete a biblioteca HealthCheckLib no construtor. Em seguida, defina as dependências para a verificação de saúde usando o método setDependencies. Por fim, defina o status de cada dependência usando o método setDependencyStatus.
 
 ```javascript
-import { HealthCheckService, DependencyType, DependencyKindEnum, DependencyStatusEnum } from 'lib-node-health-check/presentation/nestjs';
+import { HealthCheckService, DependencyType, DependencyKindEnum, DependencyStatusEnum } from 'lib-node-health-check';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';

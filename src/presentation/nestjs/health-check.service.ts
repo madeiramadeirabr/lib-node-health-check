@@ -6,7 +6,7 @@ import {
   HealthCheckBasicInfo,
   HealthCheckLib,
   HealthCheckType,
-} from '../lib';
+} from '..';
 import { HealthCheckOptionsDto } from './health-check-options.dto';
 
 @Injectable()
