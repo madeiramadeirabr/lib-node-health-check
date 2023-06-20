@@ -3,12 +3,12 @@ import { DependencyType } from '../../../core/entities/dependency-type';
 import { HealthCheckBasicInfo } from '../../../core/entities/health-check-basic-info-type';
 import { HealthCheckType } from '../../../core/entities/health-check-type';
 import { HealthCheckRepository } from '../../../core/repository/health-check-repository';
-import { HealthCheckStatusEnum } from '../../../presentation/lib';
+import { HealthCheckStatusEnum, SystemType } from '../../../presentation/lib';
 import { Memory } from '../../datasource/memory/interface/memory-interface';
+import os from 'os';
 
 export class HashMapHealthCheck implements HealthCheckRepository {
   private readonly DependenciesKey = 'dependencies';
-  private readonly HealthCheckKey = 'health-check';
   private readonly basicInfoKey = 'basic-info';
 
   constructor(private cache: Memory) {}
@@ -44,8 +44,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
       currentStatus = HealthCheckStatusEnum.Unhealthy;
     }
 
-    //TODO
-    const system: any = {};
+    const system: SystemType = this.getSystemStatus();
 
     const output: HealthCheckType = {
       status: currentStatus,
@@ -73,5 +72,42 @@ export class HashMapHealthCheck implements HealthCheckRepository {
           dependency.status = status;
         }
       });
+  }
+
+  private getSystemStatus(): SystemType {
+    const cpu = {
+      utilization: this.getCpuUtilization(),
+    };
+
+    const memory = {
+      total: this.getTotalMemory(),
+      used: this.getUsedMemory(),
+    };
+
+    return {
+      cpu,
+      memory,
+    };
+  }
+
+  private getCpuUtilization(): number {
+    const cpuInfo = os.cpus();
+    const totalIdle = cpuInfo.reduce((acc, cpu) => acc + cpu.times.idle, 0);
+    const totalTick = cpuInfo.reduce(
+      (acc, cpu) =>
+        Object.values(cpu.times).reduce((tickAcc, tick) => tickAcc + tick, 0),
+      0,
+    );
+
+    // return Number(((1 - totalIdle / totalTick) * 100).toFixed(2));
+    return (1 - totalIdle / totalTick) * 100;
+  }
+
+  private getTotalMemory(): number {
+    return os.totalmem();
+  }
+
+  private getUsedMemory(): number {
+    return os.totalmem() - os.freemem();
   }
 }
