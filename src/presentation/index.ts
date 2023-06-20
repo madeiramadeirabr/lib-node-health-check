@@ -7,5 +7,6 @@ export { HealthCheckStatusEnum } from '../core/entities/health-status-enum';
 export { CPUType, MemoryType, SystemType } from '../core/entities/system-type';
 export { HealthCheckLib } from './lib/health-check-lib';
 
-export * from './nestjs/health-check.module';
-export * from './nestjs/health-check.service';
+export { HealthCheckModule } from './nestjs/health-check.module';
+export { HealthCheckService } from './nestjs/health-check.service';
+export { HealthCheckOptionsDto } from './nestjs/health-check-options.dto';
