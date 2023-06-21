@@ -38,7 +38,7 @@ import { AppService } from './app.service';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
-    HealthCheckModule.register({
+    HealthCheckModule.forRoot({
       name : 'my-app',
       version : '1.0.1',
     }),
@@ -114,3 +114,16 @@ import { HealthCheckModule } from 'lib-node-health-check/presentation/nestjs';
 })
 export class CatModule {}
 ```
+
+Então, injete a biblioteca HealthCheckLib no construtor do servico.
+
+```javascript
+import { HealthCheckService } from 'lib-node-health-check/presentation/nestjs';
+
+@Injectable()
+export class CatsService {
+  constructor(private readonly healthCheckLib: HealthCheckService) {}
+}
+```
+
+
