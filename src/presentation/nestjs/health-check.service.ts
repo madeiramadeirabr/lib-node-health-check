@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Optional } from '@nestjs/common';
 
 import {
   DependencyStatusEnum,
@@ -12,6 +12,7 @@ import { HealthCheckOptionsDto } from './health-check-options.dto';
 @Injectable()
 export class HealthCheckService {
   constructor(
+    @Optional()
     @Inject('HEALTH_CHECK_OPTIONS')
     private healthCheckOptionsDto?: HealthCheckOptionsDto,
   ) {
