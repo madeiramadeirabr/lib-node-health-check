@@ -15,6 +15,12 @@ Métodos
 - `setDependencyStatus(dependencyName: string, status: DependencyStatusEnum): void`
   Este método atualiza o status de uma dependência individual. Ele recebe dois parâmetros: dependencyName, que é uma string representando o nome ou identificador da dependência, e status, que é um valor de enumeração do tipo DependencyStatusEnum. O DependencyStatusEnum é um tipo de enumeração personalizado que define diferentes valores de status para uma dependência.
 
+- `forRoot(options: HealthCheckOptionsDto)` 
+  Este método estático é usado para configurar o módulo HealthCheckModule. Ele recebe como parâmetro um objeto HealthCheckOptionsDto.
+
+- `forFeature()` 
+  Este método estático é usado para importar o módulo HealthCheckModule em outros módulos. Ele não recebe parâmetros.
+
 ### Exemplo de uso
 
 No seu módulo principal, importe o módulo HealthCheckModule e injete a biblioteca HealthCheckLib no construtor. Em seguida, defina as dependências para a verificação de saúde usando o método setDependencies. Por fim, defina o status de cada dependência usando o método setDependencyStatus.
@@ -47,8 +53,8 @@ export class AppModule {
     const dependencies: DependencyType[] = [
       {
         name: AppModule.DB_NAME,
-        kind: DependencyKindEnum.DATABASE,
-        status: DependencyStatusEnum.UP,
+        kind: DependencyKindEnum.Mongodb,
+        status: DependencyStatusEnum.Healthy,
       },
     ];
     this.healthCheckLib.setDependencies(dependencies);
@@ -94,4 +100,17 @@ export class AppController {
     return healthCheck;
   }
 }
+```
+
+Para importar em outros módulos, use o método estático forFeature do módulo HealthCheckModule.
+
+```javascript
+import { HealthCheckModule } from 'lib-node-health-check/presentation/nestjs';
+
+@Module({
+  imports: [
+    HealthCheckModule.forFeature(), //use o forFeature para nao ter que configurar as dependências novamente
+  ],
+})
+export class CatModule {}
 ```
