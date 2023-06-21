@@ -65,7 +65,7 @@ export class AppModule {
 ```javascript
 import { Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { HealthCheckService } from 'lib-node-health-check/presentation/nestjs';
+import { HealthCheckService } from 'lib-node-health-check';
 
 @Controller()
 export class AppController {
@@ -105,7 +105,7 @@ export class AppController {
 Para importar em outros módulos, use o método estático forFeature do módulo HealthCheckModule.
 
 ```javascript
-import { HealthCheckModule } from 'lib-node-health-check/presentation/nestjs';
+import { HealthCheckModule } from 'lib-node-health-check';
 
 @Module({
   imports: [
@@ -118,7 +118,7 @@ export class CatModule {}
 Então, injete a biblioteca HealthCheckLib no construtor do servico.
 
 ```javascript
-import { HealthCheckService } from 'lib-node-health-check/presentation/nestjs';
+import { HealthCheckService } from 'lib-node-health-check';
 
 @Injectable()
 export class CatsService {
