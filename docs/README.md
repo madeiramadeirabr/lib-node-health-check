@@ -5,8 +5,8 @@ Esta documentação fornece uma visão geral de como configurar uma aplicação 
 
 ## Nodejs
 
-Checar o arquivo [README_Pure_Nodejs](README_Pure_Nodejs.md)
+Checar o arquivo [Nodejs](README_Pure_Nodejs.md)
 
 ## NestJs
 
-Checar o arquivo [README_NEST_JS](READE_NESTJS.md)
+Checar o arquivo [NESTJS](READE_NESTJS.md)

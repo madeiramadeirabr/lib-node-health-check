@@ -10,12 +10,9 @@ Biblioteca em Node que implementa a [MMRFC](https://madeiramadeira.atlassian.net
 Mantida pelo de SRE
 Aberto para qualquer equipe atualizar e implementar funcionalidades
 
-## Desenvolvimento
-Para ambiente de desenvolvimento
+## Instruções para uso da biblioteca
 
-```bash
-
-```
+[Acessar documentação](./docs/README.md)
 
 ## Testes
 Para rodar os testes, raíz do projeto você deve rodar:
@@ -35,7 +32,3 @@ Para gerar os badges de coverage, raíz do projeto você deve rodar:
 ```bash
 $ npm run test:badges
 ```
-
-## Instruções para uso da biblioteca
-
-[Acessar documentação](./docs/README.md)
