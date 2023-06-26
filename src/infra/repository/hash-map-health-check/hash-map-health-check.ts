@@ -11,8 +11,29 @@ import os from 'os';
 export class HashMapHealthCheck implements HealthCheckRepository {
   private readonly DependenciesKey = 'dependencies';
   private readonly basicInfoKey = 'basic-info';
+  private readonly RUNNER_INTERVAL = 1000;
+  private interval: NodeJS.Timeout | undefined;
 
   constructor(private cache: Memory) {}
+
+  init(): void {
+    if (this.interval) return;
+    this.interval = setInterval(() => {
+      this.processRunners();
+    }, this.RUNNER_INTERVAL);
+  }
+
+  public async processRunners() {
+    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey);
+    await Promise.allSettled(
+      dependencies.map(async (dependency) => {
+        if (dependency.runner) {
+          const status = await dependency.runner.getStatus();
+          this.setDependencyStatus(dependency.name, status);
+        }
+      }),
+    );
+  }
 
   setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfo): void {
     this.cache.set(this.basicInfoKey, basicInfo);

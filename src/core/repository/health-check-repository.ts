@@ -4,6 +4,8 @@ import { HealthCheckBasicInfo } from '../entities/health-check-basic-info-type';
 import { HealthCheckType } from '../entities/health-check-type';
 
 export interface HealthCheckRepository {
+  init(): void;
+  processRunners(): Promise<void>;
   getHealthCheck(): Promise<HealthCheckType>;
   setDependencies(dependencies: DependencyType[]): void;
   setDependencyStatus(

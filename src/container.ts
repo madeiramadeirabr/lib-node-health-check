@@ -5,6 +5,7 @@ import { SetDependenciesStatusUseCase } from './core/use-case/set-dependencies-s
 import { SetDependenciesUseCase } from './core/use-case/set-dependencies-use-case';
 import { HashMapMemory } from './infra/datasource/memory/hash-map-memory';
 import { Memory } from './infra/datasource/memory/interface/memory-interface';
+import { MongoDependencyRunner } from './infra/repository/dependency-runner/mongo-dependency-runner';
 import { HashMapHealthCheck } from './infra/repository/hash-map-health-check/hash-map-health-check';
 
 export class Container {
@@ -22,7 +23,9 @@ export class Container {
     return Container.make<HealthCheckRepository>(
       'HealthCheckRepository',
       () => {
-        return new HashMapHealthCheck(Container.getMemory());
+        const healthCheck = new HashMapHealthCheck(Container.getMemory());
+        healthCheck.init();
+        return healthCheck;
       },
     );
   }
@@ -66,5 +69,10 @@ export class Container {
     return Container.make<SetBasicInfoUseCase>('SetBasicInfoUseCase', () => {
       return new SetBasicInfoUseCase(Container.getHealthCheckRepository());
     });
+  }
+
+  public static getMongoDependencyRunner() {
+    //We won't cache this one because it's a dependency of a dependency
+    return new MongoDependencyRunner();
   }
 }
