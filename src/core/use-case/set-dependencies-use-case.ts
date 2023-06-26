@@ -16,7 +16,7 @@ export class SetDependenciesUseCase extends UseCaseBase<
   getRunner(kind: DependencyKindEnum): DependencyRunnerRepository | undefined {
     switch (kind) {
       case DependencyKindEnum.Mongodb:
-        return Container.getMongoDependencyRunner();
+        return Container.getMongooseDependencyRunner();
       case DependencyKindEnum.Mysql:
       // return new MySqlRunner(); //TODO
       default:

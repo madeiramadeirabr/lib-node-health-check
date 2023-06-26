@@ -24,13 +24,17 @@ export class HashMapHealthCheck implements HealthCheckRepository {
   }
 
   public async processRunners() {
-    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey);
+    const dependencies =
+      this.cache.get<DependencyType[]>(this.DependenciesKey) || [];
     await Promise.allSettled(
       dependencies.map(async (dependency) => {
         if (dependency.runner) {
           const status = await dependency.runner.getStatus();
-          this.setDependencyStatus(dependency.name, status);
+          if (status) {
+            this.setDependencyStatus(dependency.name, status);
+          }
         }
+        return dependency;
       }),
     );
   }
