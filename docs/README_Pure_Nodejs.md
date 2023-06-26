@@ -17,6 +17,9 @@ Métodos
 - `setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfoType): void`
   Este método define as informações básicas da verificação de saúde. Ele recebe como parâmetro um objeto HealthCheckBasicInfoType. O HealthCheckBasicInfoType é um tipo personalizado que representa as informações básicas da verificação de saúde. Ele inclui o nome e a versão da aplicação ou sistema.
 
+- `DependencyRunner` 
+  Esta classe é usada para executar verificações de saúde para dependências individuais. Ela retorna um estado de verificação de saúde para uma dependência específica. Ela é usada internamente pela biblioteca HealthCheck para executar verificações de saúde para cada dependência.
+
 ### Exemplo de uso
 
 
@@ -118,4 +121,49 @@ db.once('open', () => {
     console.log(`Server listening on port ${port}`);
   });
 });
+```
+### DependencyRunner
+
+A lib possui um `DependencyRunner` incluso chamado de `MongooseDepencyRunner` ele e incluido automaticamente quando o `kind` e interno, e não foi informado nenhum outro runner.
+
+Exemplo de como implementar um Runner
+
+```javascript
+
+const { DependencyRunnerRepository, DependencyStatusEnum } = require('lib-node-health-check');
+
+class APIPokemonRunner extends DependencyRunnerRepository {
+  constructor() {
+    super();
+  }
+
+  async run() {
+    try {
+      const response = await axios.get('https://pokeapi.co/alive');
+      if (response.status === 200) {
+        return DependencyStatusEnum.Healthy;
+      }
+      return DependencyStatusEnum.Unhealthy;
+    } catch (error) {
+      // return DependencyStatusEnum.Unavailable;
+      return undefined; //retornamos undefined quando não temos um status para atualizar na dependencia
+    }
+  }
+}
+
+const healthCheck = HealthCheckLib.getInstance();
+//create a list of dependencies
+const dependencies: DependencyType[] = [
+  {
+    name: 'pokemon-api',
+    kind: DependencyKindEnum.WebService,
+    status: DependencyStatusEnum.Healthy,
+    optional: false,
+    internal: false,
+    runner: new APIPokemonRunner(),
+  },
+];
+//set the dependencies
+healthCheck.setDependencies(dependencies);
+
 ```
