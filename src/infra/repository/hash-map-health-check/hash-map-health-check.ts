@@ -72,9 +72,15 @@ export class HashMapHealthCheck implements HealthCheckRepository {
 
     const system: SystemType = this.getSystemStatus();
 
+    //we cant expose the runner to the client
+    const dependenciesWithoutRunner = dependencies.map((dependency) => {
+      dependency.runner = undefined;
+      return dependency;
+    });
+
     const output: HealthCheckType = {
       status: currentStatus,
-      dependencies,
+      dependencies: dependenciesWithoutRunner,
       ...basicInfo,
       timestamp: Date.now(),
       system,

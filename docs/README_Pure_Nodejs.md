@@ -132,7 +132,7 @@ Exemplo de como implementar um Runner
 
 const { DependencyRunnerRepository, DependencyStatusEnum } = require('lib-node-health-check');
 
-class APIPokemonRunner extends DependencyRunnerRepository {
+class APIPokemonRunner implements DependencyRunnerRepository {
   constructor() {
     super();
   }
