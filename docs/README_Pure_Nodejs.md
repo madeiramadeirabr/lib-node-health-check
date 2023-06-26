@@ -137,7 +137,7 @@ class APIPokemonRunner extends DependencyRunnerRepository {
     super();
   }
 
-  async run() {
+  async getStatus(): Promise<DependencyStatusEnum | undefined> {
     try {
       const response = await axios.get('https://pokeapi.co/alive');
       if (response.status === 200) {
