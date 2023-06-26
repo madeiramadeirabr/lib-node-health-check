@@ -74,8 +74,10 @@ export class HashMapHealthCheck implements HealthCheckRepository {
 
     //we cant expose the runner to the client
     const dependenciesWithoutRunner = dependencies.map((dependency) => {
-      dependency.runner = undefined;
-      return dependency;
+      return {
+        ...dependency,
+        runner: undefined,
+      };
     });
 
     const output: HealthCheckType = {
