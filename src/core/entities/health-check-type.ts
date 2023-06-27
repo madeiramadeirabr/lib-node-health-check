@@ -6,7 +6,7 @@ export interface HealthCheckType {
   name: string;
   status: HealthCheckStatusEnum;
   version: string;
-  timestamp: number;
+  timestamp: string;
   system: SystemType;
   dependencies: DependencyType[];
 }

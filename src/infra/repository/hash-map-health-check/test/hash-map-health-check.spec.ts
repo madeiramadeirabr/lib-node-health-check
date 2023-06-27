@@ -113,7 +113,7 @@ describe('HashMapHealthCheck', () => {
       status: DependencyStatusEnum.Healthy,
       dependencies: projectDependencies,
       ...basicInfo,
-      timestamp: expect.any(Number),
+      timestamp: expect.any(String),
       system: {
         cpu: {
           utilization: expect.any(Number),

@@ -35,7 +35,7 @@ describe('GetDependenciesUseCase', () => {
       name: 'health-check',
       status: HealthCheckStatusEnum.Healthy,
       version: '1.0.0',
-      timestamp: Date.now(),
+      timestamp: new Date().toISOString(),
       system: {
         cpu: {
           utilization: 0.5,
