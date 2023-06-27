@@ -4,6 +4,7 @@ import { HashMapHealthCheck } from '../hash-map-health-check';
 import { DependencyType } from '../../../../core/entities/dependency-type';
 import { DependencyKindEnum } from '../../../../core/entities/dependency-kind-enum';
 import { DependencyStatusEnum } from '../../../../core/entities/dependency-status-enum';
+import { DependencyRunnerRepository } from '../../../../core/repository/dependency-runner-repository';
 
 describe('HashMapHealthCheck', () => {
   let hashMap: HashMapHealthCheck;
@@ -123,5 +124,25 @@ describe('HashMapHealthCheck', () => {
         },
       },
     });
+  });
+
+  it('should get dependencies correctly without runner', async () => {
+    const dependencies2 = dependencies;
+    const fakeRunner = createMock<DependencyRunnerRepository>();
+    dependencies2[0].runner = fakeRunner;
+
+    const basicInfo = {
+      name: 'name',
+      version: 'version',
+    };
+
+    jest.spyOn(cache, 'get').mockReturnValue(dependencies2);
+    jest.spyOn(hashMap, 'getBasicInfo').mockReturnValue(basicInfo);
+
+    const result = await hashMap.getHealthCheck();
+
+    expect(
+      result.dependencies.some((dependency) => dependency.runner !== undefined),
+    ).toBe(false);
   });
 });

@@ -1,3 +1,4 @@
+import { DependencyRunnerRepository } from '../repository/dependency-runner-repository';
 import { DependencyKindEnum } from './dependency-kind-enum';
 import { DependencyStatusEnum } from './dependency-status-enum';
 
@@ -8,4 +9,5 @@ export interface DependencyType {
   latency?: number;
   optional: boolean;
   internal: boolean;
+  runner?: DependencyRunnerRepository;
 }

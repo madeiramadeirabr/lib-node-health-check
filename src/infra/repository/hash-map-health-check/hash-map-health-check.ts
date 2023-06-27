@@ -11,8 +11,24 @@ import os from 'os';
 export class HashMapHealthCheck implements HealthCheckRepository {
   private readonly DependenciesKey = 'dependencies';
   private readonly basicInfoKey = 'basic-info';
+  private readonly RUNNER_MS_TIMEOUT = 1000;
+  private lastHealthCheckRun: number = 0;
 
   constructor(private cache: Memory) {}
+
+  private async processRunners(dependencies: DependencyType[]) {
+    await Promise.allSettled(
+      dependencies.map(async (dependency) => {
+        if (dependency.runner) {
+          const status = await dependency.runner.getStatus();
+          if (status) {
+            this.setDependencyStatus(dependency.name, status);
+          }
+        }
+        return dependency;
+      }),
+    );
+  }
 
   setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfo): void {
     this.cache.set(this.basicInfoKey, basicInfo);
@@ -22,11 +38,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
     return this.cache.get<HealthCheckBasicInfo>(this.basicInfoKey);
   }
 
-  async getHealthCheck(): Promise<HealthCheckType> {
-    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey);
-    const basicInfo = this.getBasicInfo();
-    let currentStatus = HealthCheckStatusEnum.Healthy;
-
+  private getStatus(dependencies: DependencyType[]): HealthCheckStatusEnum {
     if (
       dependencies.some(
         (dependency) =>
@@ -34,7 +46,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
           !dependency.optional,
       )
     ) {
-      currentStatus = HealthCheckStatusEnum.Unavailable;
+      return HealthCheckStatusEnum.Unavailable;
     } else if (
       dependencies.some(
         (dependency) =>
@@ -42,16 +54,43 @@ export class HashMapHealthCheck implements HealthCheckRepository {
           !dependency.optional,
       )
     ) {
-      currentStatus = HealthCheckStatusEnum.Unhealthy;
+      return HealthCheckStatusEnum.Unhealthy;
     }
+    return HealthCheckStatusEnum.Healthy;
+  }
 
+  private removeRunner(dependencies: DependencyType[]): DependencyType[] {
+    //we cant expose the runner to the client
+    const dependenciesWithoutRunner = dependencies.map((dependency) => {
+      return {
+        ...dependency,
+        runner: undefined,
+      };
+    });
+    return dependenciesWithoutRunner;
+  }
+
+  async getHealthCheck(): Promise<HealthCheckType> {
+    const dependencies =
+      this.cache.get<DependencyType[]>(this.DependenciesKey) || [];
+
+    const basicInfo = this.getBasicInfo();
     const system: SystemType = this.getSystemStatus();
 
+    const now = Date.now();
+    const diffInMilliSeconds = Math.abs(now - this.lastHealthCheckRun);
+
+    //response cache
+    if (diffInMilliSeconds > this.RUNNER_MS_TIMEOUT) {
+      await this.processRunners(dependencies);
+      this.lastHealthCheckRun = now;
+    }
+
     const output: HealthCheckType = {
-      status: currentStatus,
-      dependencies,
+      status: this.getStatus(dependencies),
+      dependencies: this.removeRunner(dependencies),
       ...basicInfo,
-      timestamp: Date.now(),
+      timestamp: now,
       system,
     };
 
