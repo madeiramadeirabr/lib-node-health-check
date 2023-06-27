@@ -106,7 +106,7 @@ export class CatsService {
 
 ```javascript
 
-import { DependencyRunner, DependencyType, DependencyStatusEnum } from 'lib-node-health-check';
+import { DependencyRunnerRepository, DependencyType, DependencyStatusEnum } from 'lib-node-health-check';
 
 const mongo_name = 'MongoDB';
 const dependencies: DependencyType[] = [

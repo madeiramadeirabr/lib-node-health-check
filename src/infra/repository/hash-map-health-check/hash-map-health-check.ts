@@ -78,6 +78,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
     const system: SystemType = this.getSystemStatus();
 
     const now = Date.now();
+    const isoDate = new Date(now).toISOString();
     const diffInMilliSeconds = Math.abs(now - this.lastHealthCheckRun);
 
     //response cache
@@ -90,7 +91,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
       status: this.getStatus(dependencies),
       dependencies: this.removeRunner(dependencies),
       ...basicInfo,
-      timestamp: now,
+      timestamp: isoDate,
       system,
     };
 
