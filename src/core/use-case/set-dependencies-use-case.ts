@@ -13,23 +13,7 @@ export class SetDependenciesUseCase extends UseCaseBase<
     super();
   }
 
-  getRunner(kind: DependencyKindEnum): DependencyRunnerRepository | undefined {
-    switch (kind) {
-      case DependencyKindEnum.Mongodb:
-        return Container.getMongooseDependencyRunner();
-      case DependencyKindEnum.Mysql:
-      // return new MySqlRunner(); //TODO
-      default:
-        return undefined;
-    }
-  }
-
   async execute(data: DependencyType[]): Promise<void> {
-    data.forEach((dependency) => {
-      if (dependency.runner === undefined && dependency.internal) {
-        dependency.runner = this.getRunner(dependency.kind);
-      }
-    });
     this.healthCheckRepository.setDependencies(data);
   }
 }
