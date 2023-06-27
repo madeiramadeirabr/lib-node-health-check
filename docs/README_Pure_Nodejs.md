@@ -1,7 +1,9 @@
 # Documentação Técnica
 
-Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o Express e o MongoDB com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde.
-## HealthCheckLib
+Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o Express e o MongoDB com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Também é descrito o tratamento de erros para erros de conexão do MongoDB e falhas na verificação de saúde. caso a sua aplicação seja feita em nestjs consulte o arquivo [NestJs](READE_NESTJS.md)
+
+
+# HealthCheckLib
 
 Métodos
 
@@ -17,105 +19,12 @@ Métodos
 - `setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfoType): void`
   Este método define as informações básicas da verificação de saúde. Ele recebe como parâmetro um objeto HealthCheckBasicInfoType. O HealthCheckBasicInfoType é um tipo personalizado que representa as informações básicas da verificação de saúde. Ele inclui o nome e a versão da aplicação ou sistema.
 
-### Exemplo de uso
+# Exemplo de uso
 
+Checar o arquivo [Exemplos](Exemplo_NodeJs.md#configuração-de-um-app-com-express-e-mongoose)
 
-```javascript
-const express = require('express');
-const mongoose = require('mongoose');
-const {
-  HealthCheckLib,
-  DependencyType,
-  DependencyKindEnum,
-  DependencyStatusEnum,
-} = require('lib-node-health-check');
+# DependencyRunner
 
-// Create an Express application
-const app = express();
+Exemplo de como implementar um Runner
 
-// Configure MongoDB connection
-mongoose.connect('mongodb://localhost/mydatabase', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-
-// Handle MongoDB connection errors
-db.on('error', (error) => {
-  console.error('MongoDB connection error:', error);
-});
-
-// Handle MongoDB connection success
-db.once('open', () => {
-  console.log('MongoDB connected successfully');
-
-  // Initialize the HealthCheck library
-  const healthCheck = HealthCheckLib.getInstance();
-  //create a list of dependencies
-  const dependencies: DependencyType[] = [
-    {
-      name: 'my-app-db-1',
-      kind: DependencyKindEnum.Mongodb,
-      status: DependencyStatusEnum.Healthy,
-      optional: false,
-      internal: false,
-    },
-  ];
-  //set the dependencies
-  healthCheck.setDependencies(dependencies);
-  healthCheck.setHealthCheckBasicInfo({
-    name : 'my-app',
-    version : '1.0.1',
-  })
-
-  db.on('disconnected', () => {
-    // Set the dependency status to unavailable
-    healthCheck.setDependencyStatus(
-      'my-app-db-1',
-      DependencyStatusEnum.Unavailable,
-    );
-  });
-
-  // Set up routes
-  app.get('/', (req, res) => {
-    res.send('Hello, World!');
-  });
-
-  app.post('/create/book', (req, res) => {
-    db.collection('books').insertOne(req.body, (error, result) => {
-      if (error) {
-        console.error('Error creating book:', error);
-        // Set the dependency status to unhealthy
-        healthCheck.setDependencyStatus(
-          'my-app-db-1',
-          DependencyStatusEnum.Unhealthy,
-        );
-        res.status(500).json({ error: 'Error creating book' });
-      } else {
-        // Set the dependency status to healthy
-        healthCheck.setDependencyStatus(
-          'my-app-db-1',
-          DependencyStatusEnum.Healthy,
-        );
-        res.status(201).json(result.ops[0]);
-      }
-    });
-  });
-
-  app.get('/health', async (req, res) => {
-    try {
-      // Perform health check and retrieve results
-      const healthCheckResult = await healthCheck.getHealthCheck();
-      res.json(healthCheckResult);
-    } catch (error) {
-      res.status(500).json({ error: 'Health check failed' });
-    }
-  });
-
-  // Start the server
-  const port = 3000;
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-});
-```
+Checar o arquivo [Exemplos](Exemplo_NodeJs.md#exemplo-de-configuração-de-um-dependency-runner)

@@ -10,7 +10,7 @@ Biblioteca em Node que implementa a [MMRFC](https://madeiramadeira.atlassian.net
 Mantida pelo de SRE
 Aberto para qualquer equipe atualizar e implementar funcionalidades
 
-## Instruções para uso da biblioteca
+# Instruções para uso da biblioteca e instalação
 
 [Acessar documentação](./docs/README.md)
 

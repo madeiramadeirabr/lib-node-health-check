@@ -1,12 +1,15 @@
 ## Documentação Técnica
 
-Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o NestJs com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck. Sinta-se à vontade para personalizar e estender a aplicação com base nos requisitos específicos do seu projeto.
+Esta documentação fornece uma visão geral de como configurar uma aplicação Node.js usando o NestJs com a biblioteca HealthCheck. Ela abrange a instalação de dependências, a configuração da aplicação e as instruções de uso. A aplicação inclui uma rota padrão e uma rota /health para executar uma verificação de saúde usando a biblioteca HealthCheck.
 
+## Instalação
 
-## Nodejs
+Para instalar a biblioteca HealthCheck, execute o seguinte comando:
 
-Checar o arquivo [Nodejs](README_Pure_Nodejs.md)
+```bash
+$ npm install lib-node-health-check --save
+```
 
-## NestJs
+## Configuração 
 
-Checar o arquivo [NESTJS](READE_NESTJS.md)
+Checar o arquivo [Nodejs](README_Pure_Nodejs.md) para `NestJs` checar o arquivo [NestJs](READE_NESTJS.md)
