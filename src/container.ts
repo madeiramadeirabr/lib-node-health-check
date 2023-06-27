@@ -22,7 +22,8 @@ export class Container {
     return Container.make<HealthCheckRepository>(
       'HealthCheckRepository',
       () => {
-        return new HashMapHealthCheck(Container.getMemory());
+        const healthCheck = new HashMapHealthCheck(Container.getMemory());
+        return healthCheck;
       },
     );
   }
