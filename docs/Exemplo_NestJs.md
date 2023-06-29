@@ -103,6 +103,7 @@ export class CatsService {
 
 # Exemplo de uso do dependency runner
 
+Atenção o exemplo abaixo usa typescritpt
 
 ```javascript
 
@@ -119,10 +120,12 @@ const dependencies: DependencyType[] = [
   },
 ];
 
-class MongooseRunner implements DependencyRunnerRepository {
-  constructor(private readonly connection: any) {}
+class MongooseRunner extends DependencyRunnerRepository {
+  constructor(private readonly connection: any) {
+    super()
+  }
 
-  async getStatus(): Promise<DependencyStatusEnum | undefined> {
+  protected async getStatus(): Promise<DependencyStatusEnum | undefined> {
     try {
       if (this.connection.readyState === 1) return DependencyStatusEnum.Healthy;
       return DependencyStatusEnum.Unhealthy;
@@ -135,7 +138,7 @@ class MongooseRunner implements DependencyRunnerRepository {
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/healthck', {
+    MongooseModule.forRoot('mongodb://localhost/my-app', {
       connectionFactory: (connection) => {
         dependencies[0].runner = new MongooseRunner(connection);
         return connection;
