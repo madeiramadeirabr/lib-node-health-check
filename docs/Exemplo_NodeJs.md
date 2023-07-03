@@ -14,7 +14,7 @@ const {
 const app = express();
 
 // Configure MongoDB connection
-mongoose.connect('mongodb://localhost/mydatabase', {
+mongoose.connect('mongodb://localhost/my-app', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -110,7 +110,7 @@ const {
 
 //NOTE - Em javascript puro voce não consegue implementar a interface DependencyRunnerRepository
 
-class APIPokemonRunner implements DependencyRunnerRepository {
+class APIPokemonRunner extends DependencyRunnerRepository {
   async getStatus(): Promise<DependencyStatusEnum | undefined> {
     try {
       const response = await axios.get('https://pokeapi.co/alive');
@@ -125,8 +125,8 @@ class APIPokemonRunner implements DependencyRunnerRepository {
   }
 }
 
-class MongoStatus implements DependencyRunnerRepository {
-  async getStatus() {
+class MongoStatus extends DependencyRunnerRepository {
+  protected async getStatus() {
     try {
       const connectionStatus = mongoose.connection.readyState;
       if (connectionStatus === 1) return DependencyStatusEnum.Healthy;

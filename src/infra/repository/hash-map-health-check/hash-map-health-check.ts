@@ -20,7 +20,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
     await Promise.allSettled(
       dependencies.map(async (dependency) => {
         if (dependency.runner) {
-          const status = await dependency.runner.getStatus();
+          const status = await dependency.runner.getStatusCheck();
           if (status) {
             this.setDependencyStatus(dependency.name, status);
           }
