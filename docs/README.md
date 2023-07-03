@@ -7,7 +7,7 @@ Esta documentação fornece uma visão geral de como configurar uma aplicação 
 Para instalar a biblioteca HealthCheck, execute o seguinte comando:
 
 ```bash
-$ npm install lib-node-health-check --save
+$ npm install https://github.com/madeiramadeirabr/lib-node-health-check --save
 ```
 
 ## Configuração 

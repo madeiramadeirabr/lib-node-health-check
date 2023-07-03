@@ -1,4 +1,7 @@
+// @ts-ignore-start
 import { Module, DynamicModule } from '@nestjs/common';
+// @ts-ignore-end
+
 import { HealthCheckService } from './health-check.service';
 import { HealthCheckOptionsDto } from './health-check-options.dto';
 
