@@ -1,4 +1,6 @@
+// @ts-ignore-start
 import { Injectable, Inject, Optional } from '@nestjs/common';
+// @ts-ignore-end
 
 import {
   DependencyStatusEnum,
