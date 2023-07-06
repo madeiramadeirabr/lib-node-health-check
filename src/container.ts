@@ -3,6 +3,7 @@ import { GetDependenciesUseCase } from './core/use-case/get-health-check-use-cas
 import { SetBasicInfoUseCase } from './core/use-case/set-basic-info-use-case';
 import { SetDependenciesStatusUseCase } from './core/use-case/set-dependencies-status-use-case';
 import { SetDependenciesUseCase } from './core/use-case/set-dependencies-use-case';
+import { UpdateDependencyRunnerUseCase } from './core/use-case/update-runner-dependency-use-case';
 import { HashMapMemory } from './infra/datasource/memory/hash-map-memory';
 import { Memory } from './infra/datasource/memory/interface/memory-interface';
 import { HashMapHealthCheck } from './infra/repository/hash-map-health-check/hash-map-health-check';
@@ -67,5 +68,16 @@ export class Container {
     return Container.make<SetBasicInfoUseCase>('SetBasicInfoUseCase', () => {
       return new SetBasicInfoUseCase(Container.getHealthCheckRepository());
     });
+  }
+
+  public static getUpdateRunnerDependencyUseCase() {
+    return Container.make<UpdateDependencyRunnerUseCase>(
+      'UpdateRunnerDependencyUseCase',
+      () => {
+        return new UpdateDependencyRunnerUseCase(
+          Container.getHealthCheckRepository(),
+        );
+      },
+    );
   }
 }

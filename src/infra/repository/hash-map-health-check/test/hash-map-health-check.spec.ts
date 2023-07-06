@@ -145,4 +145,16 @@ describe('HashMapHealthCheck', () => {
       result.dependencies.some((dependency) => dependency.runner !== undefined),
     ).toBe(false);
   });
+  
+  it('should update runner in dependency correctly', () => {
+    const dependencyName = 'dependency1';
+    const runner = createMock<DependencyRunnerRepository>();
+
+    jest.spyOn(cache, 'get').mockReturnValue(dependencies);
+
+    hashMap.updateRunnerInDependency(dependencyName, runner);
+
+    expect(cache.get).toHaveBeenCalledWith('dependencies');
+    expect(dependencies[0].runner).toEqual(runner);
+  });
 });

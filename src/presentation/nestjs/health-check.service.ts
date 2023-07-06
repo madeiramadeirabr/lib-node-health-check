@@ -3,6 +3,7 @@ import { Injectable, Inject, Optional } from '@nestjs/common';
 // @ts-ignore-end
 
 import {
+  DependencyRunnerRepository,
   DependencyStatusEnum,
   DependencyType,
   HealthCheckBasicInfo,
@@ -49,5 +50,15 @@ export class HealthCheckService {
 
   public async getHealthCheck(): Promise<HealthCheckType> {
     return await HealthCheckLib.getInstance().getHealthCheck();
+  }
+
+  public async updateRunnerInDependency(
+    dependencyName: string,
+    runner: DependencyRunnerRepository,
+  ): Promise<void> {
+    await HealthCheckLib.getInstance().updateRunnerInDependency(
+      dependencyName,
+      runner,
+    );
   }
 }
