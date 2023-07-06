@@ -1,3 +1,4 @@
+export { UpdateDependencyRunnerType } from '../core/entities/update-dependency-runner-type';
 export { DependencyRunnerRepository } from '../core/repository/dependency-runner-repository';
 export { HealthCheckBasicInfo } from '../core/entities/health-check-basic-info-type';
 export { DependencyKindEnum } from '../core/entities/dependency-kind-enum';

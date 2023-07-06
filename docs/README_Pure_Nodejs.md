@@ -19,6 +19,9 @@ Métodos
 - `setHealthCheckBasicInfo(basicInfo: HealthCheckBasicInfoType): void`
   Este método define as informações básicas da verificação de saúde. Ele recebe como parâmetro um objeto HealthCheckBasicInfoType. O HealthCheckBasicInfoType é um tipo personalizado que representa as informações básicas da verificação de saúde. Ele inclui o nome e a versão da aplicação ou sistema.
 
+- `updateRunnerInDependency(dependencyName: string, runner: DependencyRunnerRepository): Promise<void>`
+  Este método atualiza o runner de uma dependência individual. Ele recebe dois parâmetros: dependencyName, que é uma string representando o nome ou identificador da dependência, e runner, que é um objeto DependencyRunnerRepository. O DependencyRunnerRepository é um tipo personalizado que representa um runner de uma dependência. Ele inclui o método run, que é uma função assíncrona que retorna uma Promise. O método run é usado para executar uma verificação de saúde para uma dependência específica.
+
 # Exemplo de uso
 
 Checar o arquivo [Exemplos](Exemplo_NodeJs.md#configuração-de-um-app-com-express-e-mongoose)

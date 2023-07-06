@@ -7,6 +7,7 @@ import { HealthCheckStatusEnum } from '../../../core/entities/health-status-enum
 import { SystemType } from '../../../core/entities/system-type';
 import { Memory } from '../../datasource/memory/interface/memory-interface';
 import os from 'os';
+import { DependencyRunnerRepository } from '../../../presentation';
 
 export class HashMapHealthCheck implements HealthCheckRepository {
   private readonly DependenciesKey = 'dependencies';
@@ -15,6 +16,19 @@ export class HashMapHealthCheck implements HealthCheckRepository {
   private lastHealthCheckRun: number = 0;
 
   constructor(private cache: Memory) {}
+ 
+  updateRunnerInDependency(
+    dependencyName: string,
+    runner: DependencyRunnerRepository | null,
+  ): void {
+    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey);
+    const dependency = dependencies.find(
+      (dependency) => dependency.name === dependencyName,
+    );
+    if (dependency) {
+      dependency.runner = runner;
+    }
+  }
 
   private async processRunners(dependencies: DependencyType[]) {
     await Promise.allSettled(

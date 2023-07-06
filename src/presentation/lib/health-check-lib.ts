@@ -3,6 +3,7 @@ import { DependencyStatusEnum } from '../../core/entities/dependency-status-enum
 import { DependencyType } from '../../core/entities/dependency-type';
 import { HealthCheckBasicInfo } from '../../core/entities/health-check-basic-info-type';
 import { HealthCheckType } from '../../core/entities/health-check-type';
+import { DependencyRunnerRepository } from '../../core/repository/dependency-runner-repository';
 
 export class HealthCheckLib {
   private static instance: HealthCheckLib;
@@ -44,5 +45,17 @@ export class HealthCheckLib {
   ): Promise<void> {
     const setHealthCheckBasicInfoUseCase = Container.getSetBasicInfoUseCase();
     await setHealthCheckBasicInfoUseCase.execute(basicInfo);
+  }
+
+  public async updateRunnerInDependency(
+    dependencyName: string,
+    runner: DependencyRunnerRepository,
+  ): Promise<void> {
+    const updateRunnerDependencyUseCase =
+      Container.getUpdateRunnerDependencyUseCase();
+    await updateRunnerDependencyUseCase.execute({
+      dependencyName,
+      runner,
+    });
   }
 }
