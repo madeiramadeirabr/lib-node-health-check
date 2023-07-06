@@ -1,7 +1,6 @@
 import { createMock } from 'ts-auto-mock';
 import { HealthCheckRepository } from '../../repository/health-check-repository';
-import { UpdateDependencyRunnerUseCase } from '../update-runner-dependency-use-case';
-import { DependencyStatusEnum } from '../../entities/dependency-status-enum';
+import { UpdateDependencyRunnerUseCase } from '../update-runner-dependency-use-case'; 
 import { DependencyRunnerRepository } from '../../repository/dependency-runner-repository';
 
 describe('UpdateDependencyRunnerUseCase', () => {
