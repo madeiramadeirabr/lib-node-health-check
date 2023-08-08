@@ -176,13 +176,10 @@ describe('HashMapHealthCheck', () => {
       version: 'version',
     };
 
-
     jest.spyOn(os, 'cpus').mockReturnValue(cpuInfoStub)
     jest.spyOn(hashMap, 'getBasicInfo').mockReturnValue(basicInfo);
 
     const result = await hashMap.getHealthCheck();
-
-    console.log(result);
     expect(cache.get).toHaveBeenCalledWith('dependencies');
     expect(hashMap.getBasicInfo).toHaveBeenCalled();
     expect(result).toEqual({
