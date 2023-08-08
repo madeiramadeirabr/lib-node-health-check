@@ -5,6 +5,8 @@ import { DependencyType } from '../../../../core/entities/dependency-type';
 import { DependencyKindEnum } from '../../../../core/entities/dependency-kind-enum';
 import { DependencyStatusEnum } from '../../../../core/entities/dependency-status-enum';
 import { DependencyRunnerRepository } from '../../../../core/repository/dependency-runner-repository';
+import os from 'os';
+import { cpuInfoStub, cpuUtilization } from '../../../../../test/stubs/cpus';
 
 describe('HashMapHealthCheck', () => {
   let hashMap: HashMapHealthCheck;
@@ -167,4 +169,33 @@ describe('HashMapHealthCheck', () => {
     expect(() => hashMap.updateRunnerInDependency(dependencyName, runner)).not.toThrowError();
     expect(cache.get).toHaveBeenCalledWith('dependencies');
   });
+
+  it('should return cpu usage corretly', async () => {
+    const basicInfo = {
+      name: 'name',
+      version: 'version',
+    };
+
+    jest.spyOn(os, 'cpus').mockReturnValue(cpuInfoStub)
+    jest.spyOn(hashMap, 'getBasicInfo').mockReturnValue(basicInfo);
+
+    const result = await hashMap.getHealthCheck();
+    expect(cache.get).toHaveBeenCalledWith('dependencies');
+    expect(hashMap.getBasicInfo).toHaveBeenCalled();
+    expect(result).toEqual({
+      status: DependencyStatusEnum.Healthy,
+      dependencies: [],
+      ...basicInfo,
+      timestamp: expect.any(String),
+      system: {
+        cpu: {
+          utilization: cpuUtilization
+        },
+        memory: {
+          total: expect.any(Number),
+          used: expect.any(Number),
+        },
+      },
+    });
+  })
 });

@@ -147,14 +147,18 @@ export class HashMapHealthCheck implements HealthCheckRepository {
 
   private getCpuUtilization(): number {
     const cpuInfo = os.cpus();
+    const numCPUs = cpuInfo.length;
     const totalIdle = cpuInfo.reduce((acc, cpu) => acc + cpu.times.idle, 0);
     const totalTick = cpuInfo.reduce(
       (acc, cpu) =>
-        Object.values(cpu.times).reduce((tickAcc, tick) => tickAcc + tick, 0),
+        acc + Object.values(cpu.times).reduce((tickAcc, tick) => tickAcc + tick, 0),
       0,
     );
 
-    return (1 - totalIdle / totalTick) * 100;
+    const idle = totalIdle / numCPUs;
+    const tick = totalTick / numCPUs;
+  
+    return (tick - idle) / tick;
   }
 
   private getTotalMemory(): number {
