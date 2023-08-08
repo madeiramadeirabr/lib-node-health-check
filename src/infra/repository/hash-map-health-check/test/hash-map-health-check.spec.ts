@@ -157,4 +157,14 @@ describe('HashMapHealthCheck', () => {
     expect(cache.get).toHaveBeenCalledWith('dependencies');
     expect(dependencies[0].runner).toEqual(runner);
   });
+
+  it('should not update when cache dependencies return undefined', () => {
+    const dependencyName = 'dependency1';
+    const runner = createMock<DependencyRunnerRepository>();
+
+    jest.spyOn(cache, 'get').mockReturnValue(undefined);
+
+    expect(() => hashMap.updateRunnerInDependency(dependencyName, runner)).not.toThrowError();
+    expect(cache.get).toHaveBeenCalledWith('dependencies');
+  });
 });

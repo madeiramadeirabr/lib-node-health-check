@@ -21,7 +21,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
     dependencyName: string,
     runner: DependencyRunnerRepository | null,
   ): void {
-    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey);
+    const dependencies = this.cache.get<DependencyType[]>(this.DependenciesKey) ?? [];
     const dependency = dependencies.find(
       (dependency) => dependency.name === dependencyName,
     );
