@@ -145,7 +145,7 @@ export class HashMapHealthCheck implements HealthCheckRepository {
     };
   }
 
-  private getCpuUtilization(): number { 
+  private getCpuUtilization(): number {
     const cpuInfo = os.cpus();
     const numCPUs = cpuInfo.length;
     const totalIdle = cpuInfo.reduce((acc, cpu) => acc + cpu.times.idle, 0);
